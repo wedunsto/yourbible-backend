@@ -1,0 +1,21 @@
+/* Increase the width of Mermaid diagrams */
+.markdown-preview-view .mermaid {
+    max-width: 100%;  /* Make the diagram take up the full width of the container */
+    width: 100%;      /* Set the diagram to 100% of the container width */
+}
+
+/* Increase the height of Mermaid diagrams */
+.markdown-preview-view .mermaid svg {
+    width: 100%;  /* Scale SVG to 100% width of its container */
+    height: auto; /* Maintain aspect ratio while scaling height */
+}
+
+/* Optional: Increase font size in Mermaid diagrams */
+.markdown-preview-view .mermaid {
+    font-size: 16px; /* Adjust this value as needed */
+}
+
+/*- editor line width - fills entire editor -*/
+body {
+  --file-line-width: 100%;
+} 

@@ -1,0 +1,13 @@
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: auth-swagger-ui
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./authorization.json:/usr/share/nginx/html/authorization.json:ro
+    environment:
+      URLS: >
+        [
+          { "url": "/authorization.json", "name": "Authorization API" }
+        ]
