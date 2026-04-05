@@ -1,0 +1,108 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+!**/[Pp]ackages/repositories.config
+*.nuget.props
+*.nuget.targets
+
+# .NET tools
+.dotnet/
+
+# Logs
+*.log
+logs/
+
+# ASP.NET / app settings
+appsettings.Development.json
+secrets.json
+
+# User secrets
+**/secrets/
+
+# Environment files
+.env
+.env.*
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]enchmarkDotNet.Artifacts/
+
+# Coverage
+coverage/
+coverage.*
+*.coverage
+*.coveragexml
+
+# Publish output
+publish/
+out/
+
+# Entity Framework
+*.mdf
+*.ldf
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# JetBrains
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Azure / local tooling
+.localhistory/
+.azurite/
+
+# Generated files
+Generated/
+*.generated.cs
+
+# Docker
+docker-compose.override.yml
+
+# SQL Server files
+*.bak
+*.trn
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Certificate / key files
+*.pfx
+*.snk
+*.key
+*.pem
+*.crt
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
