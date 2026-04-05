@@ -31,7 +31,7 @@ public class AuthenticationService {
         var newUser = new User {
             username = request.Username,
             password = password,
-            user_status = "new",
+            account_status = "new",
         };
 
         _db.Users.Add(newUser);
@@ -59,7 +59,7 @@ public class AuthenticationService {
         return new LoginResponse
         {
             AccessToken = "fake-token-123", // Stub JWT
-            account_status = userData.user_status
+            account_status = userData.account_status
         };
     }
 }

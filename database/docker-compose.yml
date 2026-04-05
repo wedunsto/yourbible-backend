@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16
+    container_name: yourbible-db
+    ports:
+      - "5432:5432"
+    env_file: .env
+    volumes:
+      # persistent data
+      - yourbible_db:/var/lib/postgresql/data
+
+volumes:
+  yourbible_db:

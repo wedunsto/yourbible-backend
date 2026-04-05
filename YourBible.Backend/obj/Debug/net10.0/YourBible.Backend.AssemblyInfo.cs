@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("YourBible.Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7301dd6431f9113fb657ea4535d9424443a45e11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3318d4739e1cffc240d7afa59e6123e7ac3e6da6")]
 [assembly: System.Reflection.AssemblyProductAttribute("YourBible.Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("YourBible.Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "83BuZe0pfxk=",
+  "dgSpecHash": "VTJB8TbqDzc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\wedun\\Documents\\github-repo\\YourZone\\YourBible\\yourbible-backend\\YourBible.Backend\\YourBible.Backend.csproj",
+  "projectFilePath": "C:\\Users\\wedun\\Documents\\GitHub-Repos\\yourbible-backend\\YourBible.Backend\\YourBible.Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wedun\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\wedun\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

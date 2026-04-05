@@ -15,7 +15,7 @@ public class AppDbContext : DbContext
     {
         var e = modelBuilder.Entity<User>();
         e.HasIndex(u => u.username).IsUnique();
-        e.Property(u => u.user_status).HasConversion<string>();              // enum -> text
+        e.Property(u => u.account_status).HasConversion<string>();              // enum -> text
         e.Property(u => u.created_at).HasDefaultValueSql("NOW()");
         e.Property(u => u.updated_at).HasDefaultValueSql("NOW()");
     }
