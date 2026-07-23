@@ -1,6 +1,7 @@
 import { RegisterResponse } from "../dtos/register-response.dto";
-import { PrismaClient } from "../generated/prisma/client"
-import { PrismaPg } from "@prisma/adapter-pg"
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { AccountStatus } from "../dtos/account-status.enum";
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -17,26 +18,20 @@ export const userExists = async (username: string): Promise<boolean> => {
     return result !== null;
 }
 
-const generateSalt = () => {
-    bcrypt.generateSalt(saltRounds, (err, salt) => {
-        if (err) {
-            return;
-        }
-    })
-}
-
-export const registerUser = async (username: string, password: string): RegisterResponse => {
-    let hashedPassword = "";
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-        if (err) {
-            return;
-        }
-
-        hashedPassword = hash;
-    });
+export const registerUser = async (username: string, password: string): Promise<RegisterResponse> => {
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     await prisma.users.create({
-        username: username,
-        password: hashedPassword
-    })
+        data: {
+            username: username,
+            password: hashedPassword
+        }
+    });
+
+    const response: RegisterResponse = {
+        username,
+        accountStatus: AccountStatus.NEW
+    }
+
+    return response;
 }
