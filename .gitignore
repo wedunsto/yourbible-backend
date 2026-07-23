@@ -44,3 +44,5 @@ Thumbs.db
 # Temp files
 tmp/
 temp/
+
+/src/generated/prisma

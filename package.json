@@ -21,9 +21,12 @@
   },
   "homepage": "https://github.com/wedunsto/yourbible-backend#readme",
   "dependencies": {
+    "@prisma/client": "^7.9.0",
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "dotenv": "^17.4.2",
+    "nodemon": "^3.1.14",
+    "prisma": "^7.9.0"
   }
 }
