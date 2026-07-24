@@ -50,7 +50,7 @@ export const registerUser = async (username: string, password: string): Promise<
  * Return the reponse code
  * Front-end will route based on the response code
  */
-export const login = async (username: string, password: string): Promise<LoginResponse | null> => {
+export const loginUser = async (username: string, password: string): Promise<LoginResponse | null> => {
     const user = await prisma.users.findUnique({
         where: {
             username: username
