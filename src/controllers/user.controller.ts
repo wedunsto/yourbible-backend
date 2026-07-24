@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { registerUser, loginUser } from "../services/user.service";
+import { registerUser, loginUser, userExists } from "../services/user.service";
 import { Prisma } from "../generated/prisma/client";
 
 /**
@@ -9,6 +9,30 @@ import { Prisma } from "../generated/prisma/client";
  *  Call the service
  *  Return an result and HTTP response
  */
+
+export const existingUser = async (req: Request, res: Response): Promise<void> => {
+    const { username } = req.body;
+
+    if (!username || typeof username !== "string") {
+        res.status(400).json({ message: "username is required" });
+        return;
+    }
+
+    try {
+        const result = await userExists(username);
+
+        // User doesnt exist: Route to registration page
+        if (result) {
+            res.status(200).json("/login");
+            return;
+        }
+
+        // User does exist: Route to login page
+        res.status(200).json("/register");
+    } catch (err) {
+        res.status(500).json({ message: "internal server error" });
+    }
+}
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     const { username, password } = req.body;
