@@ -11,7 +11,7 @@ import { Prisma } from "../generated/prisma/client";
  */
 
 export const existingUser = async (req: Request, res: Response): Promise<void> => {
-    const { username } = req.body;
+    const { username } = req.params;
 
     if (!username || typeof username !== "string") {
         res.status(400).json({ message: "username is required" });
