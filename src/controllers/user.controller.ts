@@ -11,7 +11,7 @@ import { Prisma } from "../generated/prisma/client";
  */
 
 export const existingUser = async (req: Request, res: Response): Promise<void> => {
-    const { username } = req.params;
+    const { username } = req.query;
 
     if (!username || typeof username !== "string") {
         res.status(400).json({ message: "username is required" });
@@ -23,12 +23,15 @@ export const existingUser = async (req: Request, res: Response): Promise<void> =
 
         // User doesnt exist: Route to registration page
         if (result) {
-            res.status(200).json("/login");
+            res.status(200).json({
+                "destination": "/login"
+            });
             return;
         }
 
         // User does exist: Route to login page
-        res.status(200).json("/register");
+        res.status(200).json({
+            "destination": "/register"});
     } catch (err) {
         res.status(500).json({ message: "internal server error" });
     }
