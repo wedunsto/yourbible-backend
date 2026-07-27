@@ -9,6 +9,11 @@ import { bibleStudyNoteRouter } from "./src/routes/bible-study-note.routes.ts";
 import { bibleStudyNotesRouter } from "./src/routes/bible-study-notes.routes.ts";
 import { allowedOrigins } from "./src/middleware/cors.middleware.ts";
 
+// Prisma returns bigint for BIGINT columns, but JSON.stringify can't serialize bigint natively
+(BigInt.prototype as any).toJSON = function (): string {
+    return this.toString();
+};
+
 // Create web server, build RESTful APIs, handle the backend request-response cycles
 const app = express();
 const PORT = process.env.SERVER_PORT;

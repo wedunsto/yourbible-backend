@@ -3,4 +3,4 @@ import { getBibleStudyNote } from "../controllers/bible-study-notes.controller";
 
 export const bibleStudyNoteRouter = Router();
 
-bibleStudyNoteRouter.get("/:noteId", getBibleStudyNote);
+bibleStudyNoteRouter.get("/", getBibleStudyNote);

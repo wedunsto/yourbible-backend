@@ -29,42 +29,42 @@ export const createBibleStudyNotes = async (req: Request, res: Response): Promis
 }
 
 export const getBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
-    const { note_id } = req.params;
+    const { noteId } = req.query;
 
-    if (!note_id) {
+    if (!noteId) {
         res.status(400).json({ messages: "Note id is required"});
         return;
     }
 
-    if(typeof(note_id) !== "string") {
+    if(typeof(noteId) !== "string") {
         res.status(400).json({ messages: "Note id must be a string"});
         return;
     }
 
     try {
-        const result = await readBibleStudyNote(BigInt(note_id));
+        const result = await readBibleStudyNote(BigInt(noteId));
         res.status(200).json(result);
     } catch(err) {
         console.log(err)
-        res.status(500).json({ message: "internal server error" });
+        res.status(500).json({ message: err });
     }
 }
 
 export const getBibleStudyNotes = async (req: Request, res: Response): Promise<void> => {
-    const { user_id } = req.params;
+    const { userId } = req.query;
 
-    if (!user_id) {
+    if (!userId) {
         res.status(400).json({ messages: "User id is required"});
         return;
     }
 
-    if(typeof(user_id) !== "string") {
+    if(typeof(userId) !== "string") {
         res.status(400).json({ messages: "User id must be a string"});
         return;
     }
 
     try {
-        const result = await readBibleStudyNotes(BigInt(user_id));
+        const result = await readBibleStudyNotes(BigInt(userId));
         res.status(200).json(result);
     } catch(err) {
         console.log(err)

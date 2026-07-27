@@ -4,4 +4,4 @@ import { createBibleStudyNotes, getBibleStudyNote, getBibleStudyNotes } from "..
 export const bibleStudyNotesRouter = Router();
 
 bibleStudyNotesRouter.post("/", createBibleStudyNotes);
-bibleStudyNotesRouter.get("/:userId", getBibleStudyNotes);
+bibleStudyNotesRouter.get("/", getBibleStudyNotes);
