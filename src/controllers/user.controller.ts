@@ -7,7 +7,7 @@ import { Prisma } from "../generated/prisma/client";
  * Used to:
  *  Parse incoming requests
  *  Call the service
- *  Return an result and HTTP response
+ *  Return a result and HTTP response
  */
 
 export const existingUser = async (req: Request, res: Response): Promise<void> => {
