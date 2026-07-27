@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { createBibleStudyNotes, getBibleStudyNote, getBibleStudyNotes } from "../controllers/bible-study-notes.controller";
 
-export const bibleStudyNoteRouter = Router();
+export const bibleStudyNotesRouter = Router();
 
-bibleStudyNoteRouter.post("/", createBibleStudyNotes);
-bibleStudyNoteRouter.get("/", getBibleStudyNote);
-bibleStudyNoteRouter.get("/:noteId", getBibleStudyNotes);
+bibleStudyNotesRouter.post("/", createBibleStudyNotes);
+bibleStudyNotesRouter.get("/:userId", getBibleStudyNotes);

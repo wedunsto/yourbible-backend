@@ -29,20 +29,20 @@ export const createBibleStudyNotes = async (req: Request, res: Response): Promis
 }
 
 export const getBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
-    const { user_id, note_id } = req.query;
+    const { note_id } = req.params;
 
-    if (!user_id || !note_id) {
-        res.status(400).json({ messages: "User id and note id are required"});
+    if (!note_id) {
+        res.status(400).json({ messages: "Note id is required"});
         return;
     }
 
-    if(typeof(user_id) !== "string" || typeof(note_id) !== "string") {
-        res.status(400).json({ messages: "User id and note id must be strings"});
+    if(typeof(note_id) !== "string") {
+        res.status(400).json({ messages: "Note id must be a string"});
         return;
     }
 
     try {
-        const result = await readBibleStudyNote(BigInt(user_id), BigInt(note_id));
+        const result = await readBibleStudyNote(BigInt(note_id));
         res.status(200).json(result);
     } catch(err) {
         console.log(err)
@@ -51,7 +51,7 @@ export const getBibleStudyNote = async (req: Request, res: Response): Promise<vo
 }
 
 export const getBibleStudyNotes = async (req: Request, res: Response): Promise<void> => {
-    const { user_id } = req.query;
+    const { user_id } = req.params;
 
     if (!user_id) {
         res.status(400).json({ messages: "User id is required"});

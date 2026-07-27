@@ -5,7 +5,8 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import { userRouter } from "./src/routes/user.routes";
-import { bibleStudyNoteRouter } from "./src/routes/bible-study-notes.routes.ts";
+import { bibleStudyNoteRouter } from "./src/routes/bible-study-note.routes.ts";
+import { bibleStudyNotesRouter } from "./src/routes/bible-study-notes.routes.ts";
 import { allowedOrigins } from "./src/middleware/cors.middleware.ts";
 
 // Create web server, build RESTful APIs, handle the backend request-response cycles
@@ -23,8 +24,11 @@ app.use(express.json());
 // Access authentication and authorization routes
 app.use("/yourbible/users", userRouter);
 
+// Access Bible study notes routes
+app.use("/yourbible/notes", bibleStudyNotesRouter);
+
 // Access Bible study note routes
-app.use("/yourbible/notes", bibleStudyNoteRouter);
+app.use("/yourbible/note", bibleStudyNoteRouter)
 
 // Test route
 app.get('/api/health', (req, res) => {

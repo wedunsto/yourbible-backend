@@ -21,10 +21,9 @@ export const createBibleStudyNote = async (bibleStudyNote: BibleStudyNote) => {
     return bibleStudyNote;
 }
 
-export const readBibleStudyNote = async (user_id: bigint, note_id: bigint): Promise<BibleStudyNote | null> => {
+export const readBibleStudyNote = async (note_id: bigint): Promise<BibleStudyNote | null> => {
     const bibleStudyNote = await prisma.bible_study_notes.findFirst({
         where: {
-            user_id: user_id,
             id: note_id
         }
     });
