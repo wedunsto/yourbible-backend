@@ -67,7 +67,8 @@ export const loginUser = async (username: string, password: string): Promise<Log
     if (passwordsMatch) {
         const successfulLogin: LoginResponse = {
             username: username,
-            accountStatus: user!.account_status as AccountStatus
+            accountStatus: user!.account_status as AccountStatus,
+            accessToken: 'temp'
         }
         return successfulLogin;
     }

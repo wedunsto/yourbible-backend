@@ -31,10 +31,10 @@ export const readBibleStudyNote = async (note_id: bigint): Promise<BibleStudyNot
     return bibleStudyNote;
 }
 
-export const readBibleStudyNotes = async (user_id: bigint): Promise<Array<BibleStudyNote> | null> => {
+export const readBibleStudyNotes = async (username: bigint): Promise<Array<BibleStudyNote> | null> => {
     const bibleStudyNotes = await prisma.bible_study_notes.findMany({
         where: {
-            user_id: user_id
+            username: username
         }
     });
 

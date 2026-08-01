@@ -1,5 +1,5 @@
 export type BibleStudyNote = {
-    user_id: bigint;
+    username: string;
     book: string;
     chapter: number;
     verses: string;
