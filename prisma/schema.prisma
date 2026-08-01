@@ -9,7 +9,7 @@ datasource db {
 
 model bible_study_notes {
   id               BigInt   @id @default(autoincrement())
-  user_id          BigInt
+  username         String
   book             String
   chapter          Int
   verses           String
