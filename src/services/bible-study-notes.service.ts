@@ -49,3 +49,11 @@ export const updateBibleStudyNote = async (id: bigint, changes: UpdateBibleStudy
 
     return bibleStudyNote;
 }
+
+export const removeBibleStudyNote = async (id: bigint): Promise<bigint> => {
+    const bibleStudyNote = await prisma.bible_study_notes.delete({
+        where: { id }
+    });
+
+    return bibleStudyNote.id;
+}

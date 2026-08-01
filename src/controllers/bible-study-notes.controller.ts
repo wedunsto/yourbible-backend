@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { BibleStudyNote } from "../dtos/bible-study-note.dto";
-import { createBibleStudyNote, readBibleStudyNote, readBibleStudyNotes, updateBibleStudyNote } from "../services/bible-study-notes.service";
+import { createBibleStudyNote, readBibleStudyNote, readBibleStudyNotes, removeBibleStudyNote, updateBibleStudyNote } from "../services/bible-study-notes.service";
 import { Prisma } from "../generated/prisma/client";
 
 /**
@@ -89,6 +89,32 @@ export const patchBibleStudyNote = async (req: Request, res: Response): Promise<
 
     try {
         const result = await updateBibleStudyNote(BigInt(id), changes);
+        res.status(200).json(result);
+    } catch(err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
+            res.status(404).json({ message: "Bible study note not found" });
+            return;
+        }
+        console.log(err)
+        res.status(500).json({ message: "internal server error" });
+    }
+}
+
+export const deleteBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.query;
+
+    if (!id) {
+        res.status(400).json({ messages: "Note id is required"});
+        return;
+    }
+
+    if (typeof(id) !== "string") {
+        res.status(400).json({ messages: "Note id must be a string"});
+        return;
+    }
+
+    try {
+        const result = await removeBibleStudyNote(BigInt(id));
         res.status(200).json(result);
     } catch(err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
