@@ -1,5 +1,5 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { BibleStudyNote } from "../dtos/bible-study-note.dto";
+import { BibleStudyNote, UpdateBibleStudyNote } from "../dtos/bible-study-note.dto";
 import { PrismaClient } from "../generated/prisma/client";
 
 // Business logic for creating, reading, updating, and deleting Bible study notes
@@ -31,7 +31,7 @@ export const readBibleStudyNote = async (note_id: bigint): Promise<BibleStudyNot
     return bibleStudyNote;
 }
 
-export const readBibleStudyNotes = async (username: bigint): Promise<Array<BibleStudyNote> | null> => {
+export const readBibleStudyNotes = async (username: string): Promise<Array<BibleStudyNote> | null> => {
     const bibleStudyNotes = await prisma.bible_study_notes.findMany({
         where: {
             username: username
@@ -39,4 +39,21 @@ export const readBibleStudyNotes = async (username: bigint): Promise<Array<Bible
     });
 
     return bibleStudyNotes;
+}
+
+export const updateBibleStudyNote = async (id: bigint, changes: UpdateBibleStudyNote): Promise<BibleStudyNote> => {
+    const bibleStudyNote = await prisma.bible_study_notes.update({
+        where: { id },
+        data: { ...changes }
+    });
+
+    return bibleStudyNote;
+}
+
+export const removeBibleStudyNote = async (id: bigint): Promise<bigint> => {
+    const bibleStudyNote = await prisma.bible_study_notes.delete({
+        where: { id }
+    });
+
+    return bibleStudyNote.id;
 }
