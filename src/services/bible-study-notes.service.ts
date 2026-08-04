@@ -21,7 +21,7 @@ export const createBibleStudyNote = async (bibleStudyNote: BibleStudyNote) => {
     return bibleStudyNote;
 }
 
-export const readBibleStudyNote = async (note_id: bigint): Promise<BibleStudyNote | null> => {
+export const readBibleStudyNote = async (note_id: string): Promise<BibleStudyNote | null> => {
     const bibleStudyNote = await prisma.bible_study_notes.findFirst({
         where: {
             id: note_id
@@ -41,7 +41,7 @@ export const readBibleStudyNotes = async (username: string): Promise<Array<Bible
     return bibleStudyNotes;
 }
 
-export const updateBibleStudyNote = async (id: bigint, changes: UpdateBibleStudyNote): Promise<BibleStudyNote> => {
+export const updateBibleStudyNote = async (id: string, changes: UpdateBibleStudyNote): Promise<BibleStudyNote> => {
     const bibleStudyNote = await prisma.bible_study_notes.update({
         where: { id },
         data: { ...changes }
@@ -50,7 +50,7 @@ export const updateBibleStudyNote = async (id: bigint, changes: UpdateBibleStudy
     return bibleStudyNote;
 }
 
-export const removeBibleStudyNote = async (id: bigint): Promise<bigint> => {
+export const removeBibleStudyNote = async (id: string): Promise<strubg> => {
     const bibleStudyNote = await prisma.bible_study_notes.delete({
         where: { id }
     });

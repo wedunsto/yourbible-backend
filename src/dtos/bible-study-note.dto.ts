@@ -1,4 +1,5 @@
 export type BibleStudyNote = {
+    id: string;
     username: string;
     book: string;
     chapter: number;
