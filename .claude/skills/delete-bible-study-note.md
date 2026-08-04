@@ -1,5 +1,7 @@
+---
 name: delete-bible-study-note
 description: Create the associated service in bible-study-notes.service.ts, controller in bible-study-notes.controller.ts, and route in bible-study-note.ts, and wires the route into server.ts. The service deletes an existing Bible study note by id via Prisma against the PostgreSQL bible_study_notes table. The controller parses the bible-study-note id from the request query. The controller returns the bible-study-note id. This skill only writes/modifies code - it never calls the running API or mutates data directly, even if the request is phrased as an action on a specific note.
+---
 
 ## Stack conventions
 - Node.js / Express backend
