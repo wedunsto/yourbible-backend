@@ -114,7 +114,7 @@ export const deleteBibleStudyNote = async (req: Request, res: Response): Promise
     }
 
     try {
-        const result = await removeBibleStudyNote(BigInt(id));
+        const result = await removeBibleStudyNote(id);
         res.status(200).json(result);
     } catch(err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {

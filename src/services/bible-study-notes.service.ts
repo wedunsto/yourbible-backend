@@ -50,7 +50,7 @@ export const updateBibleStudyNote = async (id: string, changes: UpdateBibleStudy
     return bibleStudyNote;
 }
 
-export const removeBibleStudyNote = async (id: string): Promise<strubg> => {
+export const removeBibleStudyNote = async (id: string): Promise<string> => {
     const bibleStudyNote = await prisma.bible_study_notes.delete({
         where: { id }
     });
