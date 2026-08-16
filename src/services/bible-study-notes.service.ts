@@ -14,7 +14,9 @@ export const createBibleStudyNote = async (bibleStudyNote: BibleStudyNote) => {
     }
 
     await prisma.bible_study_notes.create({
-        data: bibleStudyNote
+        data: {
+            ...bibleStudyNote
+        }
     });
 
     // Return the Bible study note
