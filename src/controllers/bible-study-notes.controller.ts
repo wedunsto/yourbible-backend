@@ -52,20 +52,20 @@ export const getBibleStudyNote = async (req: Request, res: Response): Promise<vo
 }
 
 export const getBibleStudyNotes = async (req: Request, res: Response): Promise<void> => {
-    const { userId } = req.query;
+    const { username } = req.query;
 
-    if (!userId) {
+    if (!username) {
         res.status(400).json({ messages: "User id is required"});
         return;
     }
 
-    if(typeof(userId) !== "string") {
+    if(typeof(username) !== "string") {
         res.status(400).json({ messages: "User id must be a string"});
         return;
     }
 
     try {
-        const result = await readBibleStudyNotes(BigInt(userId));
+        const result = await readBibleStudyNotes(username);
         res.status(200).json(result);
     } catch(err) {
         console.log(err)
@@ -114,7 +114,7 @@ export const deleteBibleStudyNote = async (req: Request, res: Response): Promise
     }
 
     try {
-        const result = await removeBibleStudyNote(BigInt(id));
+        const result = await removeBibleStudyNote(id);
         res.status(200).json(result);
     } catch(err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
