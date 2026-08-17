@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { recommendationRequestAllowed, recommendationCategory, bibleVerseRecommendation } from "../services/bible-verse-recommendation.service";
+import { bibleVerseTranslation, getBibleVerse } from "../middleware/bible-verse-recommendation.middleware";
 
 /**
  * HTTP specific translation layer
@@ -34,7 +35,13 @@ export const createBibleRecommendation = async (req: Request, res: Response): Pr
 
         const bibleVerse = await bibleVerseRecommendation(username, category);
 
-        res.status(200).json(bibleVerse);
+        const bibleVerseText = await getBibleVerse(bibleVerse);
+
+        res.status(200).json({
+            category,
+            bibleVerse,
+            bibleVerseText
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "internal server error" });

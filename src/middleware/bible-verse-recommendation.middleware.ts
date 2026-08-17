@@ -5,6 +5,9 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import "dotenv/config";
+import { bibleBookNames } from "../dtos/bible-book-names.enum";
+
+const { createBibleClient } = require('@americanbible/api-bible-sdk')
 
 type conversationMessage = {
     "role": "user" | "assistant" | "system",
@@ -15,13 +18,18 @@ type conversationMessage = {
 export type BibleVerseRecommendationResult = {
     book: string;
     chapter: number;
-    verse: string;
+    verse: number;
 }
 
 // Client used to generate Bible verse recommendations
 const client = new Anthropic({
     apiKey: process.env['ANTHROPIC_API_KEY'],
 });
+
+// Client used to get the Bible verse 
+const bibleClient = createBibleClient({
+    apiKey: process.env['API_BIBLE_API_KEY'],
+})
 
 // System prompt customizes how Claude responds to user input
 const systemPrompt = "You are a thoughtful, pastoral theologian whose sole task is to recommend Bible verses based on a user's Bible study categories.";
@@ -107,3 +115,33 @@ export const claudeBibleVerseRecommendation = async (username: string): Promise<
 
     return recommendation;
 };
+
+// Build a lookup map once, keyed by lowercase name for case-insensitive matching
+const bookNameToCode = new Map<string, string>(
+  bibleBookNames.map((book) => [book.name.toLowerCase(), book.code])
+);
+
+const getBookCode = (name: string): string | undefined => {
+  return bookNameToCode.get(name.trim().toLowerCase());
+}
+
+const cleanVerseText = (html: string): string => {
+    return html
+        // Remove the verse-number span entirely (e.g. <span data-number="4" ...>4</span>)
+        .replace(/<span[^>]*class="v"[^>]*>.*?<\/span>/g, '')
+        // Strip any remaining HTML tags (<p>, </p>, etc.)
+        .replace(/<[^>]+>/g, '')
+        // Collapse extra whitespace and trim
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+export const getBibleVerse = async (bibleVerse: BibleVerseRecommendationResult): Promise<string> => {
+    const bookCode = getBookCode(bibleVerse.book);
+    const { data: passage } = await bibleClient.passages.get(
+        '78a9f6124f344018-01',
+        `${bookCode}.${bibleVerse.chapter}.${bibleVerse.verse}`
+    )
+
+    return cleanVerseText(passage.content);
+}
