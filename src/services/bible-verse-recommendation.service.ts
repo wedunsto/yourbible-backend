@@ -1,5 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
+import { addUserMessage, claudeBibleVerseRecommendation } from "../middleware/bible-verse-recommendation.middleware";
 
 // Business logic for gating and generating Bible verse recommendations
 
@@ -41,4 +42,29 @@ export const recommendationRequestAllowed = async (username: string): Promise<bo
 export const recommendationCategory = (categories: string[]): string => {
     const randomIndex = Math.floor(Math.random() * categories.length);
     return categories[randomIndex];
+}
+
+
+// Generate a Bible verse based on the selected category
+export const bibleVerseRecommendation = (username: string, category: string) => {
+    const prompt = `
+    Given the Bible study category: ${category}, provide one Bible verse that matches that category.
+
+    Here is an example category with an ideal response
+    <sample_category>
+    courage
+    </sample_category>
+
+    <ideal_output>
+    {
+        "book": "Joshuah",
+        "chapter": 1,
+        "verse": "9"
+    }
+    </ideal_output>
+    `
+
+    addUserMessage(username, prompt);
+
+    return claudeBibleVerseRecommendation(username);
 }
