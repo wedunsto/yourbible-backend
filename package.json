@@ -1,0 +1,44 @@
+{
+  "name": "yourbible-backend",
+  "version": "1.0.0",
+  "description": "YourBible is a **progressive web application (PWA)** designed to help users take control of their personal walk with Christ through His word. Built with a modern tech stack—**Ionic Angular frontend** and **C# .NET backend**—it leverages **OpenAI's API** to intelligently process receipts and provide meaningful financial insights.",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx server.ts",
+    "dev": "nodemon --exec tsx server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:connection": "tsx src/testConnection.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wedunsto/yourbible-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/wedunsto/yourbible-backend/issues"
+  },
+  "homepage": "https://github.com/wedunsto/yourbible-backend#readme",
+  "dependencies": {
+    "@americanbible/api-bible-sdk": "^1.1.0",
+    "@anthropic-ai/sdk": "^0.117.1",
+    "@prisma/adapter-pg": "^7.9.0",
+    "@prisma/client": "^7.9.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/pg": "^8.20.0",
+    "dotenv": "^17.4.2",
+    "nodemon": "^3.1.14",
+    "prisma": "^7.9.0",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
