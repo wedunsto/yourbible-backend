@@ -1,6 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
-import { addUserMessage, claudeBibleVerseRecommendation } from "../middleware/bible-verse-recommendation.middleware";
+import { addUserMessage, BibleVerseRecommendationResult, claudeBibleVerseRecommendation } from "../middleware/bible-verse-recommendation.middleware";
 
 // Business logic for gating and generating Bible verse recommendations
 
@@ -9,7 +9,9 @@ const prisma = new PrismaClient({ adapter });
 
 const DAILY_REQUEST_LIMIT = 10;
 
-// Determine whether a user is allowed to request another recommendation today
+// Determine whether a user is allowed to request another recommendation today,
+// and if so, record the request (atomically incrementing the daily count or
+// resetting it when the last request wasn't today).
 export const recommendationRequestAllowed = async (username: string): Promise<boolean> => {
     const user = await prisma.users.findUnique({
         where: { username }
@@ -19,23 +21,27 @@ export const recommendationRequestAllowed = async (username: string): Promise<bo
         return false;
     }
 
-    if ((user.recommendation_requests ?? 0) < DAILY_REQUEST_LIMIT) {
-        return true;
-    }
-
-    if (!user.last_recommendation_request) {
-        return true;
-    }
-
     const today = new Date();
     const lastRequest = user.last_recommendation_request;
 
-    const isSameDay = lastRequest.getUTCFullYear() === today.getUTCFullYear()
+    const isSameDay = !!lastRequest
+        && lastRequest.getUTCFullYear() === today.getUTCFullYear()
         && lastRequest.getUTCMonth() === today.getUTCMonth()
         && lastRequest.getUTCDate() === today.getUTCDate();
 
-    // Limit reached: only allow again once the last request wasn't today
-    return !isSameDay;
+    if (isSameDay && (user.recommendation_requests ?? 0) >= DAILY_REQUEST_LIMIT) {
+        return false;
+    }
+
+    await prisma.users.update({
+        where: { username },
+        data: {
+            recommendation_requests: isSameDay ? { increment: 1 } : 1,
+            last_recommendation_request: today
+        }
+    });
+
+    return true;
 }
 
 // Randomly select a category to recommend a verse from
@@ -46,7 +52,7 @@ export const recommendationCategory = (categories: string[]): string => {
 
 
 // Generate a Bible verse based on the selected category
-export const bibleVerseRecommendation = (username: string, category: string) => {
+export const bibleVerseRecommendation = async (username: string, category: string): Promise<BibleVerseRecommendationResult> => {
     const prompt = `
     Given the Bible study category: ${category}, provide one Bible verse that matches that category.
 
