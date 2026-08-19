@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { BibleStudyNote } from "../dtos/bible-study-note.dto";
 import { createBibleStudyNote, readBibleStudyNote, readBibleStudyNotes, removeBibleStudyNote, updateBibleStudyNote } from "../services/bible-study-notes.service";
 import { Prisma } from "../generated/prisma/client";
 
