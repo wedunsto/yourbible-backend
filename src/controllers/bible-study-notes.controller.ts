@@ -42,7 +42,7 @@ export const getBibleStudyNote = async (req: Request, res: Response): Promise<vo
     }
 
     try {
-        const result = await readBibleStudyNote(BigInt(noteId));
+        const result = await readBibleStudyNote(noteId);
         res.status(200).json(result);
     } catch(err) {
         console.log(err)
@@ -87,7 +87,7 @@ export const patchBibleStudyNote = async (req: Request, res: Response): Promise<
     }
 
     try {
-        const result = await updateBibleStudyNote(BigInt(id), changes);
+        const result = await updateBibleStudyNote(id, changes);
         res.status(200).json(result);
     } catch(err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2025") {
