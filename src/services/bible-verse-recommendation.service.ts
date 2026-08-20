@@ -57,7 +57,7 @@ export const bibleVerseRecommendation = async (username: string, category: strin
     Given the Bible study category: ${category}, provide one Bible verse that matches that category.
 
     Check the earlier messages in this conversation for any verses you have already recommended.
-    Do not recommend a book/chapter/verse you have already given, even if it is the most well-known
+    Do not recommend a book/chapter/verse you gave in the latest message with the assistant role, even if it is the most well-known
     verse for this category. Choose a different, biblically appropriate verse each time so that
     repeated requests for the same category yield variety.
 
