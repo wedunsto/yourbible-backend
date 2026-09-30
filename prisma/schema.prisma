@@ -8,25 +8,33 @@ datasource db {
 }
 
 model bible_study_notes {
-  id               String   @id @default(dbgenerated("nextval('bible_study_notes_id_seq'::regclass)"))
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id          String   @db.Uuid
   book             String
   chapter          Int
   verses           String
   study_categories String[]
   title            String
   notes            String
+  study_date       DateTime @db.Date
   created_at       DateTime @default(now()) @db.Timestamptz(6)
   updated_at       DateTime @default(now()) @db.Timestamptz(6)
-  username         String?
 }
 
 model users {
-  id                          BigInt    @id @default(autoincrement())
-  username                    String    @unique
-  password                    String
-  account_status              String    @default("NEW")
-  created_at                  DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at                  DateTime  @default(now()) @db.Timestamptz(6)
-  recommendation_requests     Int?
-  last_recommendation_request DateTime? @db.Date
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username       String   @unique
+  password       String
+  account_status String   @default("NEW")
+  created_at     DateTime @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime @default(now()) @db.Timestamptz(6)
+  onboarded      Boolean  @default(false)
+}
+
+model bible_study_categories {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String   @db.Uuid
+  category   String
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
 }

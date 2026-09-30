@@ -8,6 +8,7 @@ import { userRouter } from "./src/routes/user.routes";
 import { bibleStudyNoteRouter } from "./src/routes/bible-study-note.routes.ts";
 import { bibleStudyNotesRouter } from "./src/routes/bible-study-notes.routes.ts";
 import { bibleVerseRecommendationRouter } from "./src/routes/bible-verse-recommendation.routes.ts";
+import { bibleStudyCategoriesRouter } from "./src/routes/bible-study-categories.routes.ts";
 import { allowedOrigins } from "./src/middleware/cors.middleware.ts";
 
 // Prisma returns bigint for BIGINT columns, but JSON.stringify can't serialize bigint natively
@@ -35,6 +36,9 @@ app.use("/yourbible/notes", bibleStudyNotesRouter);
 
 // Access Bible study note routes
 app.use("/yourbible/note", bibleStudyNoteRouter)
+
+// Access Bible study note category routes
+app.use("/yourbible/categories", bibleStudyCategoriesRouter);
 
 // Access Bible verse recommendation routes
 app.use("/yourbible/recommend", bibleVerseRecommendationRouter);

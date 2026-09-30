@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
+import { authenticateRequest } from "./authenticate-request";
 import { recommendationRequestAllowed, recommendationCategory, bibleVerseRecommendation } from "../services/bible-verse-recommendation.service";
-import { bibleVerseTranslation, getBibleVerse } from "../middleware/bible-verse-recommendation.middleware";
+import { getBibleVerse } from "../middleware/bible-verse-recommendation.middleware";
 
 /**
  * HTTP specific translation layer
@@ -11,6 +12,10 @@ import { bibleVerseTranslation, getBibleVerse } from "../middleware/bible-verse-
  */
 
 export const createBibleRecommendation = async (req: Request, res: Response): Promise<void> => {
+    if (!authenticateRequest(req, res)) {
+        return;
+    }
+
     const { username, categories } = req.body;
 
     if (!username || typeof username !== "string") {

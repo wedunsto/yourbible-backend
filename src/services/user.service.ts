@@ -3,6 +3,7 @@ import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { AccountStatus } from "../dtos/account-status.enum";
 import { LoginResponse } from "../dtos/login-response.dto";
+import { signAccessToken } from "./token.service";
 
 // Business log for handling authentication and authorization of users
 
@@ -66,9 +67,11 @@ export const loginUser = async (username: string, password: string): Promise<Log
 
     if (passwordsMatch) {
         const successfulLogin: LoginResponse = {
+            userId: user.id,
             username: username,
-            accountStatus: user!.account_status as AccountStatus,
-            accessToken: 'temp'
+            onboarded: user.onboarded,
+            accessToken: signAccessToken(user.id, user.username),
+            tokenType: "Bearer"
         }
         return successfulLogin;
     }

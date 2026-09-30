@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { authenticateRequest } from "./authenticate-request";
 import { createBibleStudyNote, readBibleStudyNote, readBibleStudyNotes, removeBibleStudyNote, updateBibleStudyNote } from "../services/bible-study-notes.service";
 import { Prisma } from "../generated/prisma/client";
 
@@ -11,6 +12,10 @@ import { Prisma } from "../generated/prisma/client";
  */
 
 export const createBibleStudyNotes = async (req: Request, res: Response): Promise<void> => {
+    if (!authenticateRequest(req, res)) {
+        return;
+    }
+
     const { bibleStudyNote } = req.body;
 
     if (!bibleStudyNote) {
@@ -29,6 +34,10 @@ export const createBibleStudyNotes = async (req: Request, res: Response): Promis
 }
 
 export const getBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
+    if (!authenticateRequest(req, res)) {
+        return;
+    }
+
     const { noteId } = req.query;
 
     if (!noteId) {
@@ -51,6 +60,10 @@ export const getBibleStudyNote = async (req: Request, res: Response): Promise<vo
 }
 
 export const getBibleStudyNotes = async (req: Request, res: Response): Promise<void> => {
+    if (!authenticateRequest(req, res)) {
+        return;
+    }
+
     const { username } = req.query;
 
     if (!username) {
@@ -73,6 +86,10 @@ export const getBibleStudyNotes = async (req: Request, res: Response): Promise<v
 }
 
 export const patchBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
+    if (!authenticateRequest(req, res)) {
+        return;
+    }
+
     const { id } = req.query;
     const changes = req.body;
 
@@ -100,6 +117,10 @@ export const patchBibleStudyNote = async (req: Request, res: Response): Promise<
 }
 
 export const deleteBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
+    if (!authenticateRequest(req, res)) {
+        return;
+    }
+
     const { id } = req.query;
 
     if (!id) {
