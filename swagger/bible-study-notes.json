@@ -1,0 +1,62 @@
+{
+	"openapi":"3.0.3",
+	"info":{
+		"title":"Bible Study Notes API",
+		"version":"1.0.0",
+		"description": "Read, update, delete Bible study notes. Manually create Bible study note. Created Bible study notes using AI to recommend Bible verses."
+	},
+	"servers": [
+		{"url": "http://localhost:3000", "description": "Local development"}
+	],
+	"tags": [
+		{"name": "Bible Verse Recommendation"}
+	],
+	"paths": {
+		"/yourbible/note/recommendation": {
+			"post": {
+				"tags": ["Bible Verse Recommendation"],
+				"summary": "Request a Bible verse based on Bible study note category frequencies",
+				"operationId": "getBibleVerseRecommendation",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+						  "schema": { "$ref": "#/components/schemas/CategoryFrequencies" }
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "A recommended Bible verse based the user's Bible study category frequencies",
+						"content": {
+							"application/json": {
+								"schema": { "$ref": "#/components/schemas/VerseRecommendationResponse" }
+							}
+						}
+					},
+					"429": {
+						"description": "Refresh gate reached — more than 10 recommendations requested in 24 hours without a dismiss or save"
+					  }
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"CategoryFrequencies": {
+			  "type": "object",
+			  "additionalProperties": { "type": "integer", "minimum": 0 },
+			  "example": { "Hope": 4, "Fear": 1, "Money": 2 }
+			},
+			"VerseRecommendationResponse": {
+				"type": "object",
+				"properties": {
+					"book": { "type": "string" },
+					"chapter": { "type": "string" },
+					"verse": { "type": "string" },
+					"text": { "type": "string" }
+				}
+			}
+		}
+	}
+}

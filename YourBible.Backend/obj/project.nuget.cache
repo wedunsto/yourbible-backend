@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "83BuZe0pfxk=",
+  "dgSpecHash": "MUC8RMLkLng=",
   "success": true,
-  "projectFilePath": "C:\\Users\\wedun\\Documents\\github-repo\\YourZone\\YourBible\\yourbible-backend\\YourBible.Backend\\YourBible.Backend.csproj",
+  "projectFilePath": "Z:\\YourBible\\yourbible-backend\\YourBible.Backend\\YourBible.Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wedun\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\wedun\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -50,5 +50,18 @@
     "C:\\Users\\wedun\\.nuget\\packages\\system.security.permissions\\9.0.0\\system.security.permissions.9.0.0.nupkg.sha512",
     "C:\\Users\\wedun\\.nuget\\packages\\system.windows.extensions\\9.0.0\\system.windows.extensions.9.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'Microsoft.OpenApi' 2.3.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-v5pm-xwqc-g5wc",
+      "projectPath": "Z:\\YourBible\\yourbible-backend\\YourBible.Backend\\YourBible.Backend.csproj",
+      "warningLevel": 1,
+      "filePath": "Z:\\YourBible\\yourbible-backend\\YourBible.Backend\\YourBible.Backend.csproj",
+      "libraryId": "Microsoft.OpenApi",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

@@ -9,8 +9,8 @@ const prisma = new PrismaClient({ adapter });
 
 export const createBibleStudyNote = async (bibleStudyNote: BibleStudyNote) => {
 
-    if(!bibleStudyNote.created_at){
-        bibleStudyNote.created_at = new Date();
+    if(!bibleStudyNote.study_date){
+        bibleStudyNote.study_date = new Date();
     }
 
     await prisma.bible_study_notes.create({
@@ -33,10 +33,10 @@ export const readBibleStudyNote = async (note_id: string): Promise<BibleStudyNot
     return bibleStudyNote;
 }
 
-export const readBibleStudyNotes = async (username: string): Promise<Array<BibleStudyNote> | null> => {
+export const readBibleStudyNotes = async (userId: string): Promise<Array<BibleStudyNote> | null> => {
     const bibleStudyNotes = await prisma.bible_study_notes.findMany({
         where: {
-            username: username
+            user_id: userId
         }
     });
 

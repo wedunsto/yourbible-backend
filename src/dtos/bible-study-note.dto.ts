@@ -1,13 +1,13 @@
 export type BibleStudyNote = {
     id: string;
-    username: string | null;
+    user_id: string | null;
     book: string;
     chapter: number;
     verses: string;
     study_categories: Array<string>;
     title: string;
     notes: string;
-    created_at: Date;
+    study_date: Date;
 }
 
 export type UpdateBibleStudyNote = {
@@ -18,5 +18,6 @@ export type UpdateBibleStudyNote = {
     study_categories?: Array<string>;
     title?: string;
     notes?: string;
+    study_date?: Date | string;
     created_at?: Date;
 }

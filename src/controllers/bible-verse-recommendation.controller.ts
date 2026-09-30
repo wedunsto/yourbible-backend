@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+﻿import { Request, Response } from "express";
 import { recommendationRequestAllowed, recommendationCategory, bibleVerseRecommendation } from "../services/bible-verse-recommendation.service";
-import { bibleVerseTranslation, getBibleVerse } from "../middleware/bible-verse-recommendation.middleware";
+import { getBibleVerse } from "../middleware/bible-verse-recommendation.middleware";
 
 /**
  * HTTP specific translation layer

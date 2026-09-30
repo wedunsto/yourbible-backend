@@ -1,6 +1,25 @@
 import { Request, Response } from "express";
 import { createBibleStudyNote, readBibleStudyNote, readBibleStudyNotes, removeBibleStudyNote, updateBibleStudyNote } from "../services/bible-study-notes.service";
 import { Prisma } from "../generated/prisma/client";
+import { BibleStudyNote, UpdateBibleStudyNote } from "../dtos/bible-study-note.dto";
+
+/**
+ * Returns a copy of the changes with study_date converted to a Date, so Prisma receives an ISO-8601 DateTime.
+ * @param changes the raw update payload from the request body
+ * @returns the normalized changes, or null if study_date is present but not a valid date
+ */
+const normalizeStudyDate = (payload: UpdateBibleStudyNote | BibleStudyNote): UpdateBibleStudyNote | BibleStudyNote | null => {
+    if (payload.study_date === undefined) {
+        return payload;
+    }
+
+    const studyDate = new Date(payload.study_date);
+    if (isNaN(studyDate.getTime())) {
+        return null;
+    }
+
+    return { ...payload, study_date: studyDate };
+}
 
 /**
  * HTTP specific translation layer
@@ -18,8 +37,15 @@ export const createBibleStudyNotes = async (req: Request, res: Response): Promis
         return;
     }
 
+    const normalizedBibleStudyNote = normalizeStudyDate(bibleStudyNote);
+
+    if (!normalizedBibleStudyNote) {
+        res.status(400).json({ messages: "Study date must be a valid date"});
+        return;
+    }
+
     try {
-        const result = await createBibleStudyNote(bibleStudyNote);
+        const result = await createBibleStudyNote(normalizedBibleStudyNote as BibleStudyNote);
         res.status(201).json(result);
     } catch(err) {
         console.log(err)
@@ -51,20 +77,20 @@ export const getBibleStudyNote = async (req: Request, res: Response): Promise<vo
 }
 
 export const getBibleStudyNotes = async (req: Request, res: Response): Promise<void> => {
-    const { username } = req.query;
+    const { userId } = req.query;
 
-    if (!username) {
+    if (!userId) {
         res.status(400).json({ messages: "User id is required"});
         return;
     }
 
-    if(typeof(username) !== "string") {
+    if(typeof(userId) !== "string") {
         res.status(400).json({ messages: "User id must be a string"});
         return;
     }
 
     try {
-        const result = await readBibleStudyNotes(username);
+        const result = await readBibleStudyNotes(userId);
         res.status(200).json(result);
     } catch(err) {
         console.log(err)
@@ -74,7 +100,6 @@ export const getBibleStudyNotes = async (req: Request, res: Response): Promise<v
 
 export const patchBibleStudyNote = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.query;
-    const changes = req.body;
 
     if (!id) {
         res.status(400).json({ messages: "Note id is required"});
@@ -83,6 +108,12 @@ export const patchBibleStudyNote = async (req: Request, res: Response): Promise<
 
     if (typeof(id) !== "string") {
         res.status(400).json({ messages: "Note id must be a string"});
+        return;
+    }
+
+    const changes = normalizeStudyDate(req.body);
+    if (!changes) {
+        res.status(400).json({ messages: "Study date must be a valid date"});
         return;
     }
 
